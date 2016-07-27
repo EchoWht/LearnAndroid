@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +18,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.List;
 
 public class MainActivity extends Activity {
     private Button button;
@@ -37,26 +42,63 @@ public class MainActivity extends Activity {
                             InputStreamReader inputStreamReader=new InputStreamReader(inputStream,"utf-8");
                             BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
                             String line;
+
+                            StringBuilder builder=new StringBuilder();
                             while((line=bufferedReader.readLine())!=null){
-//                                System.out.println(line);
                                 return line;
                             }
                             bufferedReader.close();
                             inputStreamReader.close();
                             inputStream.close();
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return null;
                     }
                     @Override
                     protected void onPostExecute(String s) {
-                        text.setText(s);
+                        try {
+                            JSONObject object=new JSONObject(s);
+                            int result=object.getInt("result");
+                            if (result==1){
+                                System.out.println("ok,it is work!!!");
+                                JSONArray array=object.getJSONArray("returndata");
+                                for (int i=0;i<array.length();i++){
+                                    JSONObject blog=array.getJSONObject(i);
+                                    String username=blog.getString("username");
+                                    System.out.println(username);
+                                    text.setText(username);
+                                }
+                            }else {
+                                System.out.println("error,not work!!!");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }.execute("http://blskye.com/test");
             }
         });
+    }
+    private void parseJson(String json){
+        try {
+            JSONObject object=new JSONObject(json);
+            int result=object.getInt("result");
+            if (result==1){
+                System.out.println("ok,it is work!!!");
+                JSONArray array=object.getJSONArray("returndata");
+                for (int i=0;i<array.length();i++){
+                    JSONObject blog=array.getJSONObject(i);
+                    String username=blog.getString("username");
+                    System.out.println(username);
+                }
+
+            }else {
+                System.out.println("error,not work!!!");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

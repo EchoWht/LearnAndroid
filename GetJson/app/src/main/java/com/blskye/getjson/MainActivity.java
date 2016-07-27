@@ -28,16 +28,24 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             String jsonData= (String) msg.obj;
 //            System.out.println(jsonData);
+
             try {
-                JSONArray jsonArray=new JSONArray(jsonData);
-                for (int i=0;i<jsonArray.length();i++){
-                    JSONObject object=jsonArray.getJSONObject(i);
-                    String title =object.getString("title");
-                    String content =object.getString("content");
-                    System.out.println(title);
-                    blogList.add(new Blog(title,content,blogList));
+                JSONObject object=new JSONObject(jsonData);
+                int result=object.getInt("result");
+                if (result==1){
+                    System.out.println("ok,it is work!!!");
+                    JSONArray array=object.getJSONArray("returndata");
+                    for (int i=0;i<array.length();i++){
+                        JSONObject jsonObject=array.getJSONObject(i);
+                        String title =jsonObject.getString("title");
+                        String content =jsonObject.getString("content");
+                        System.out.println(title);
+                        blogList.add(new Blog(title,content,blogList));
+                    }
+                    adatper.notifyDataSetChanged();
+                }else {
+                    System.out.println("error,not work!!!");
                 }
-                adatper.notifyDataSetChanged();
             } catch (Exception e) {
                 e.printStackTrace();
             }

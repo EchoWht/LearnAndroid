@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
         {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage",R.mipmap.drink+i);
-            map.put("ItemText", "咖啡"+i);
+            map.put("ItemText", "咖啡h"+i);
             meumList.add(map);
         }
         SimpleAdapter saItem = new SimpleAdapter(this,
