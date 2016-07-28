@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
             R.mipmap.drink1,R.mipmap.drink1,R.mipmap.drink1,R.mipmap.drink1
     };
     private String[] iconName={
-            "drink","drink","drink","drink"
+            "咖啡","橙汁","苹果","桃汁"
     };
 
     @Override
@@ -44,10 +44,28 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        /*测试 获取json数据*/
 
+        gridView= (GridView) findViewById(R.id.gridView);
+        data_list=new ArrayList<Map<String, Object>>();
+
+        getData();
+
+
+        String[] from={"image","text"};
+        int[] to={R.id.image,R.id.text};
+        simpleAdapter=new SimpleAdapter(this,data_list,R.layout.item,from,to);
+        gridView.setAdapter(simpleAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index=position+1;
+                Toast.makeText(getApplicationContext(),"点击了"+index,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public List<Map<String,Object>> getData(){
+         /*测试 获取json数据*/
         new AsyncTask<String, Void, String>(){
-
             @Override
             protected String doInBackground(String... params) {
                 try {
@@ -72,17 +90,18 @@ public class MainActivity extends Activity {
             }
             @Override
             protected void onPostExecute(String s) {
-
                 try {
                     JSONObject object=new JSONObject(s);
                     int result=object.getInt("result");
                     if (result==1){
                         System.out.println("ok,it is work!!!");
                         JSONArray array=object.getJSONArray("returndata");
+
                         for (int i=0;i<array.length();i++){
-                            JSONObject blog=array.getJSONObject(i);
-                            String drinkname=blog.getString("drinkname");
-                            System.out.println(drinkname);
+                            JSONObject drinkObject=array.getJSONObject(i);
+                            String drinkname=drinkObject.getString("drinkname");
+
+                            System.out.println(drinkname+i);
                         }
                     }else {
                         System.out.println("error,not work!!!");
@@ -94,28 +113,6 @@ public class MainActivity extends Activity {
         }.execute("http://blskye.com/test/index/drink");
 
         /*测试 获取json数据*/
-//        iconName= new String[]{
-//                "drink", "drink2", "drink3", "drink", "drink", "drink"
-//        };
-        gridView= (GridView) findViewById(R.id.gridView);
-        data_list=new ArrayList<Map<String, Object>>();
-
-        getData();
-
-
-        String[] from={"image","text"};
-        int[] to={R.id.image,R.id.text};
-        simpleAdapter=new SimpleAdapter(this,data_list,R.layout.item,from,to);
-        gridView.setAdapter(simpleAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int index=position+1;
-                Toast.makeText(getApplicationContext(),"点击了"+index,Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    public List<Map<String,Object>> getData(){
         for (int i=0;i<icon.length;i++){
             Map<String,Object> map=new HashMap<String,Object>();
             map.put("image",icon[i]);

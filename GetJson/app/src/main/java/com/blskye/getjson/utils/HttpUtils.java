@@ -7,6 +7,7 @@ import android.os.Message;
 import android.widget.ImageView;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +27,12 @@ public class HttpUtils {
                 InputStream is;
                 try {
                     conn = (HttpURLConnection) new URL(url).openConnection();
-                    conn.setRequestMethod("GET");
+                    conn.setRequestMethod("POST");
+
+                    /*请求内容*/
+                    DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+                    out.writeBytes("key=1");
+
                     is=conn.getInputStream();
                     BufferedReader reader=new BufferedReader(new InputStreamReader(is));
                     String line="";

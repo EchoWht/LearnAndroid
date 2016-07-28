@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.blskye.getjson.adapter.ListAdatper;
@@ -18,11 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView lv;
+    private GridView lv;
     private ListAdatper adatper;
     private List<Blog> blogList;
-
-    public static final String GET_URL="http://blskye.com/test";
+    public static final String GET_URL="http://blskye.com/test/index/artPost";
     private Handler getListHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lv= (ListView) findViewById(R.id.lv);
+        lv= (GridView) findViewById(R.id.lv);
         blogList=new ArrayList<Blog>();
         adatper=new ListAdatper(this,blogList);
         lv.setAdapter(adatper);

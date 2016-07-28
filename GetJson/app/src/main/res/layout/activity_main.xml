@@ -5,8 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.blskye.getjson.MainActivity">
-    <ListView
+
+    <GridView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/lv"></ListView>
+        android:layout_height="wrap_content"
+        android:numColumns="auto_fit"
+        android:columnWidth="120dp"
+        android:stretchMode="columnWidth"
+        android:id="@+id/lv"></GridView>
 </LinearLayout>
