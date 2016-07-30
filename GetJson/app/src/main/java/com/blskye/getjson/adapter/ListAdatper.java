@@ -53,7 +53,7 @@ public class ListAdatper extends BaseAdapter {
         tvTitle.setText(blog.getTitle());
         tvPrice.setText(blog.getPrice());
    /*测试链接*/
-        String pic_url="http://tva4.sinaimg.cn/crop.0.0.540.540.180/e81fe3cajw8evqchrayomj20f00f00sv.jpg";
+        String pic_url="http://blskye.com/public/images/drink/drink5.png";
         HttpUtils.setPicBitmap(ivPic,pic_url);
         return convertView;
     }

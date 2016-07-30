@@ -112,6 +112,7 @@ public class MainActivity extends Activity {
             }
         }.execute("http://blskye.com/test/index/drink");
 
+
         /*测试 获取json数据*/
         for (int i=0;i<icon.length;i++){
             Map<String,Object> map=new HashMap<String,Object>();

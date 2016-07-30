@@ -5,8 +5,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.GridView;
-import android.widget.ListView;
-
 import com.blskye.getjson.adapter.ListAdatper;
 import com.blskye.getjson.model.Blog;
 import com.blskye.getjson.utils.HttpUtils;
@@ -22,13 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private GridView lv;
     private ListAdatper adatper;
     private List<Blog> blogList;
-    public static final String GET_URL="http://blskye.com/test/index/artPost";
+    public static final String GET_URL="http://blskye.com/test/index/drinkPost";
     private Handler getListHandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String jsonData= (String) msg.obj;
-//            System.out.println(jsonData);
-
             try {
                 JSONObject object=new JSONObject(jsonData);
                 int result=object.getInt("result");

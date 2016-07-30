@@ -7,11 +7,15 @@ import java.util.List;
  */
 public class Blog {
     private String title;
+
+
     private String price;
-    public Blog(String title, String price, List<Blog> blogs){
+
+    public Blog(String title, String price, List<Blog> blogs) {
         setTitle(title);
         setPrice(price);
     }
+
     public String getPrice() {
         return price;
     }
