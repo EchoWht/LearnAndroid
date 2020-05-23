@@ -1,5 +1,29 @@
 ```java
-
+private  MyThread thread;
+ @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+       
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isRun){
+                    thread = new MyThread();
+                   thread.setName("PhoneLocation");
+                    Snackbar.make(view, "开始", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    thread.start();
+                    locationClient.start();
+                }else {
+                  thread.flag=false;
+                    Snackbar.make(view, "结束", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    locationClient.stop();
+                }
+                isRun=!isRun;
+            }
+        });
 public class MyThread extends Thread{
         private volatile boolean flag = true;
         @Override
